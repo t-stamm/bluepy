@@ -470,22 +470,28 @@ def main():
 
     counter=1
     while True:
+       json_str = "{"
        if arg.temperature or arg.all:
-           print('Temp: ', tag.IRtemperature.read())
+           json_str += "\"temp\":"+str(tag.IRtemperature.read()[0])+","
+           json_str += "\"irtemp\":"+str(tag.IRtemperature.read()[1])+","
        if arg.humidity or arg.all:
-           print("Humidity: ", tag.humidity.read())
+           json_str += "\"humidity\": "+str(tag.humidity.read()[1])+","
        if arg.barometer or arg.all:
-           print("Barometer: ", tag.barometer.read())
+           json_str += "\"barometer\": "+str(tag.barometer.read()[1])+","
        if arg.accelerometer or arg.all:
-           print("Accelerometer: ", tag.accelerometer.read())
+           json_str += "\"accelerometer\": {\"x\":"+str(tag.accelerometer.read()[0])+",\"y\":"+str(tag.accelerometer.read()[1])+",\"z\":"+str(tag.accelerometer.read()[2])+"},"
        if arg.magnetometer or arg.all:
-           print("Magnetometer: ", tag.magnetometer.read())
+           json_str += "\"magnetometer\": {\"x\":"+str(tag.magnetometer.read()[0])+",\"y\":"+str(tag.magnetometer.read()[1])+",\"z\":"+str(tag.magnetometer.read()[2])+"},"
        if arg.gyroscope or arg.all:
-           print("Gyroscope: ", tag.gyroscope.read())
+           json_str += "\"gyroscope\": {\"x\":"+str(tag.gyroscope.read()[0])+",\"y\":"+str(tag.gyroscope.read()[1])+",\"z\":"+str(tag.gyroscope.read()[2])+"},"
        if (arg.light or arg.all) and tag.lightmeter is not None:
-           print("Light: ", tag.lightmeter.read())
+           json_str += "\"lightmeter\": "+str(tag.lightmeter.read())+","
        if arg.battery or arg.all:
-           print("Battery: ", tag.battery.read())
+           json_str += "\"battery\": "+str(tag.battery.read())+","
+
+       json_str = json_str[:-1]+"}"
+       print(json_str)
+
        if counter >= arg.count and arg.count != 0:
            break
        counter += 1
