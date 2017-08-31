@@ -470,7 +470,7 @@ def main():
 
     counter=1
     while True:
-       json_str = "{"
+       json_str = "{\"id\":"+str(arg.host)+","
        if arg.temperature or arg.all:
            json_str += "\"temp\":"+str(tag.IRtemperature.read()[0])+","
            json_str += "\"irtemp\":"+str(tag.IRtemperature.read()[1])+","
